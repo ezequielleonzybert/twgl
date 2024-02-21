@@ -1,18 +1,27 @@
 function setup_dom() {
     document.body.style.margin = 0
     document.body.style.padding = 0
-    canvas = document.createElement("canvas")
-    canvas.width = window.screen.width
-    canvas.height = window.screen.height
-    canvas.style.display = "block";
+
+    button.style.top = "50%"
+    button.style.left = "50%"
+    button.style.position = "absolute"
+    button.innerText = "Start"
+    button.style.width = "200px"
+    button.style.height = "200px"
+    button.style.transform = "translate(-50%, -50%)"
+    document.body.appendChild(button)
+
+    canvas.width = 0
+    canvas.height = 0
+    canvas.style.display = "block"
+    canvas.style.position = "absolute"
     document.body.appendChild(canvas)
 }
 
 let game = new Game()
 
 function app() {
-    let gl = canvas.getContext("webgl2")
-    const programInfo = twgl.createProgramInfo(gl, [vs, fs])
+    programInfo = twgl.createProgramInfo(gl, [vs, fs])
 
     const player_arrays = {
         a_position: {
@@ -24,17 +33,20 @@ function app() {
             data: player.indices,
         },
     };
-    const bufferInfo = twgl.createBufferInfoFromArrays(gl, player_arrays)
+    bufferInfo = twgl.createBufferInfoFromArrays(gl, player_arrays)
 
-    function render(time) {
-        // twgl.resizeCanvasToDisplaySize(gl.canvas)
-        // gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
+    requestAnimationFrame(render);
+}
+
+function render(time) {
+    if (state == 1) {
+        twgl.resizeCanvasToDisplaySize(gl.canvas)
+        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
         gl.clearColor(0, 0, 0, 1)
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
-        time *= 0.001
-        game.update(time)
-
+        timer = time - (unpause_time - pause_time)
+        game.update(timer)
         const uniforms = {
             u_resolution: [gl.canvas.width, gl.canvas.height],
             u_transform: player.transform,
@@ -47,8 +59,6 @@ function app() {
 
         requestAnimationFrame(render)
     }
-    requestAnimationFrame(render);
 }
 
 setup_dom()
-app()

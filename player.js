@@ -6,7 +6,7 @@ class Player {
     }
     update(time) {
         const translation1 = matrix.translation(canvas.width / 2, canvas.height / 2)
-        const translation2 = matrix.translation(Math.sin(time) * 100, 0)
+        const translation2 = matrix.translation(Math.sin(time * 0.001) * 100, 0)
         this.transform = matrix.multiply(translation1, translation2)
     }
 }
