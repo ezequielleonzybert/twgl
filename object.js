@@ -1,10 +1,12 @@
-class Object {
-    constructor() {
-        this.vertices
-        this.indices
-        this.transform
+class GameObject {
+    constructor(x, y, vertices, indices, transform) {
+        this.x = x
+        this.y = y
+        this.vertices = vertices
+        this.indices = indices
+        this.transform = transform
     }
-    static get_arrays() {
+    get_arrays() {
         const arrays = {
             a_position: {
                 numComponents: 2,
@@ -15,8 +17,9 @@ class Object {
                 data: this.indices,
             },
         }
+        return arrays
     }
-    static get_uniforms() {
+    get_uniforms() {
         const uniforms = {
             u_resolution: [gl.canvas.width, gl.canvas.height],
             u_transform: this.transform,

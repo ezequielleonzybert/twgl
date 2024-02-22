@@ -1,30 +1,35 @@
-class Player extends Object {
+class Player extends GameObject {
     constructor(x, y) {
-        super()
-        this.x = x
-        this.y = y
-        this.vertices = circle(0, 0, 30, 8)
-        this.indices = earcut(this.vertices)
-        this.transform = matrix.translation(x, y)
-        this.pivot_transform = matrix.identity()
+        const shape = circle(0, 0, 30, 6)
+        super(
+            x,
+            y,
+            shape,
+            earcut(shape),
+            matrix.translation(x, y)
+        )
         this.hook = new Hook(x, y)
         game_object.push(this)
     }
     update(time) {
-        this.hook.transform = matrix.translation(this.x, this.y - 100)
-        let rotation = matrix.rotation(-0.001)
-        this.transform = matrix.multiply(rotation, this.transform)
+        const rotation = matrix.rotation(time * 0.01)
+        const translation = matrix.translation(canvas.width / 2, canvas.height / 2)
+        const translation2 = matrix.translation(0, 100)
+        const m1 = matrix.multiply(translation, rotation)
+        this.transform = matrix.multiply(m1, translation2)
     }
 }
 
-class Hook extends Object {
+class Hook extends GameObject {
     constructor(x, y) {
-        super()
-        this.x = x
-        this.y = y
-        this.transform = matrix.translation(x, y)
-        this.vertices = circle(0, 0, 7, 8)
-        this.indices = earcut(this.vertices)
+        const shape = circle(0, 0, 7, 6)
+        super(
+            x,
+            y,
+            shape,
+            earcut(shape),
+            matrix.translation(x, y)
+        )
         game_object.push(this)
     }
 }

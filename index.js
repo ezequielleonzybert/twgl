@@ -24,7 +24,6 @@ function app() {
     programInfo = twgl.createProgramInfo(gl, [vs, fs])
 
     game_object.forEach((e) => {
-        console.log(e)
         const arrays = e.get_arrays();
         bufferInfo.push(twgl.createBufferInfoFromArrays(gl, arrays))
     })
