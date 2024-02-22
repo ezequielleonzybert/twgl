@@ -1,14 +1,3 @@
-function get_earcut(vertices) {
-    let result = [];
-    let ear = earcut(vertices);
-    for (let i = 0; i < ear.length * 2; i++) {
-        let index = ear[i] * 2;
-        result.push(vertices[index]);
-        result.push(vertices[index + 1]);
-    }
-    return new Float32Array(result);
-}
-
 function rectangle(x, y, w, h) {
     let vertices = [];
 
@@ -21,7 +10,7 @@ function rectangle(x, y, w, h) {
     vertices[6] = x - w / 2;
     vertices[7] = y + h / 2;
 
-    return get_earcut(vertices);
+    return vertices;
 }
 
 function circle(x, y, r, segments) {

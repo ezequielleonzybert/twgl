@@ -40,23 +40,29 @@ function app() {
 
 function render(time) {
     if (state == 1) {
-        twgl.resizeCanvasToDisplaySize(gl.canvas)
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
-        gl.clearColor(0, 0, 0, 1)
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+        if (lastTime != null) {
+            const delta = time - lastTime
 
-        timer = time - (unpause_time - pause_time)
-        game.update(timer)
-        const uniforms = {
-            u_resolution: [gl.canvas.width, gl.canvas.height],
-            u_transform: player.transform,
+            twgl.resizeCanvasToDisplaySize(gl.canvas)
+            gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
+            gl.clearColor(0, 0, 0, 1)
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+
+            game.update(counter + delta * 0.001)
+            const uniforms = {
+                u_resolution: [gl.canvas.width, gl.canvas.height],
+                u_transform: player.transform,
+            }
+
+            gl.useProgram(programInfo.program)
+            twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo)
+            twgl.setUniforms(programInfo, uniforms)
+            twgl.drawBufferInfo(gl, bufferInfo)
+
+            counter++
         }
 
-        gl.useProgram(programInfo.program)
-        twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo)
-        twgl.setUniforms(programInfo, uniforms)
-        twgl.drawBufferInfo(gl, bufferInfo)
-
+        lastTime = time
         requestAnimationFrame(render)
     }
 }
