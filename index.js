@@ -23,17 +23,10 @@ let game = new Game()
 function app() {
     programInfo = twgl.createProgramInfo(gl, [vs, fs])
 
-    const player_arrays = {
-        a_position: {
-            numComponents: 2,
-            data: player.vertices,
-        },
-        indices: {
-            numComponents: 2,
-            data: player.indices,
-        },
-    };
-    bufferInfo = twgl.createBufferInfoFromArrays(gl, player_arrays)
+    game_object.forEach((e) => {
+        const arrays = e.get_arrays();
+        bufferInfo.push(twgl.createBufferInfoFromArrays(gl, arrays))
+    })
 
     requestAnimationFrame(render);
 }
@@ -49,16 +42,18 @@ function render(time) {
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
             game.update(counter + delta * 0.001)
-            const uniforms = {
-                u_resolution: [gl.canvas.width, gl.canvas.height],
-                u_transform: player.transform,
+
+            for (let i = 0; i < bufferInfo.length; i++) {
+                const uniforms = {
+                    u_resolution: [gl.canvas.width, gl.canvas.height],
+                    u_transform: game_object[i].transform,
+                }
+
+                gl.useProgram(programInfo.program)
+                twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo[i])
+                twgl.setUniforms(programInfo, uniforms)
+                twgl.drawBufferInfo(gl, bufferInfo[i])
             }
-
-            gl.useProgram(programInfo.program)
-            twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo)
-            twgl.setUniforms(programInfo, uniforms)
-            twgl.drawBufferInfo(gl, bufferInfo)
-
             counter++
         }
 
