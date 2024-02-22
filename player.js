@@ -1,33 +1,29 @@
-class Player {
-    constructor() {
-        this.vertices = circle(0, 0, 50, 8)
+class Player extends Object {
+    constructor(x, y) {
+        super()
+        this.x = x
+        this.y = y
+        this.vertices = circle(0, 0, 30, 8)
         this.indices = earcut(this.vertices)
-        this.transform = matrix.identity();
+        this.transform = matrix.translation(x, y)
+        this.pivot_transform = matrix.identity()
+        this.hook = new Hook(x, y)
         game_object.push(this)
     }
     update(time) {
-        const translation1 = matrix.translation(canvas.width / 2, canvas.height / 2)
-        const translation2 = matrix.translation(Math.sin(time * 0.01) * 200, Math.cos(time * 0.01) * 200)
-        this.transform = matrix.multiply(translation1, translation2)
+        this.hook.transform = matrix.translation(this.x, this.y - 100)
+        let rotation = matrix.rotation(-0.001)
+        this.transform = matrix.multiply(rotation, this.transform)
     }
-    get_arrays() {
-        const arrays = {
-            a_position: {
-                numComponents: 2,
-                data: this.vertices,
-            },
-            indices: {
-                numComponents: 2,
-                data: this.indices,
-            },
-        }
-        return arrays
-    }
-    get_uniforms() {
-        const uniforms = {
-            u_resolution: [gl.canvas.width, gl.canvas.height],
-            u_transform: this.transform,
-        }
-        return uniforms
+}
+
+class Hook {
+    constructor(x, y) {
+        this.x = x
+        this.y = y
+        this.transform = matrix.translation(x, y)
+        this.vertices = circle(0, 0, 7, 8)
+        this.indices = earcut(this.vertices)
+        game_object.push(this)
     }
 }

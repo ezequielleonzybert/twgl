@@ -20,6 +20,7 @@ canvas.addEventListener("fullscreenchange", () => {
         unpause_time = document.timeline.currentTime
         canvas.width = window.screen.width
         canvas.height = window.screen.height
+        game.setup()
         app()
     }
     else if (state == 1) {
