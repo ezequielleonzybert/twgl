@@ -17,8 +17,9 @@ class Player extends Object {
     }
 }
 
-class Hook {
+class Hook extends Object {
     constructor(x, y) {
+        super()
         this.x = x
         this.y = y
         this.transform = matrix.translation(x, y)
