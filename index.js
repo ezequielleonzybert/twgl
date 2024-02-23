@@ -11,9 +11,9 @@ function setup_dom() {
     button.style.transform = "translate(-50%, -50%)"
     document.body.appendChild(button)
 
-    canvas.width = 0
-    canvas.height = 0
-    canvas.style.display = "block"
+    canvas.width = window.screen.width
+    canvas.height = window.screen.height
+    canvas.style.display = "none"
     canvas.style.position = "absolute"
     document.body.appendChild(canvas)
 }

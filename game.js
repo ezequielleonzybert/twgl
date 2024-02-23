@@ -10,7 +10,6 @@ class Game {
         window.setTimeout(() => { platform[0].stop = false }, 1000)
     }
     update(delta) {
-
         for (let i = 0; i < platform.length; i++) {
             const platform_width = platform[i].width
             const origin_x = canvas.width + platform_width

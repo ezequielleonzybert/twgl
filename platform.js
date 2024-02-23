@@ -19,7 +19,7 @@ class Platform extends GameObject {
     setup() {
         this.x = canvas.width + this.width / 2
         this.y = Math.random() * 250 + 15
-        this.speed = { "x": (Math.random() + 1) * 20, "y": 0 }
+        this.speed = { "x": (Math.random() + 1) * 5, "y": 0 }
     }
     update(delta) {
         this.x -= this.speed.x * delta

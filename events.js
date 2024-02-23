@@ -17,23 +17,19 @@ button.addEventListener("click", () => {
 canvas.addEventListener("fullscreenchange", () => {
     if (state == -1) {
         state = 1
-        unpause_time = document.timeline.currentTime
-        canvas.width = window.screen.width
-        canvas.height = window.screen.height
+        canvas.style.display = "block"
+        button.innerHTML = "Continue"
         game.setup()
         app()
     }
     else if (state == 1) {
         state = 0
-        // pause_time = document.timeline.currentTime
-        canvas.width = 0
-        canvas.height = 0
+        canvas.style.display = "none"
+        lastTime = null
     }
     else if (state == 0) {
         state = 1
-        // unpause_time = document.timeline.currentTime
-        canvas.width = window.screen.width
-        canvas.height = window.screen.height
+        canvas.style.display = "block"
         render()
     }
 })
