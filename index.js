@@ -34,14 +34,13 @@ function app() {
 function render(time) {
     if (state == 1) {
         if (lastTime != null) {
-            const delta = time - lastTime
+            const delta = (time - lastTime) * 0.001
 
-            twgl.resizeCanvasToDisplaySize(gl.canvas)
+            // twgl.resizeCanvasToDisplaySize(gl.canvas)
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
             gl.clearColor(0, 0, 0, 1)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
-            game.update(counter + delta * 0.001)
 
             for (let i = 0; i < bufferInfo.length; i++) {
                 const uniforms = {
@@ -53,6 +52,9 @@ function render(time) {
                 twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo[i])
                 twgl.setUniforms(programInfo, uniforms)
                 twgl.drawBufferInfo(gl, bufferInfo[i])
+
+                // game.update(counter + delta * 0.001)
+                game.update(delta)
             }
             counter++
         }

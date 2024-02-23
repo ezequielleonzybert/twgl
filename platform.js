@@ -1,26 +1,43 @@
 class Platform extends GameObject {
     constructor() {
-        const shape = rectangle(0, 0, canvas.width / 8, 30)
-        const y = Math.random() * 250
+        const width = canvas.width / 8
+        const x = canvas.width + width / 2
+        const y = Math.random() * 250 + 15
+        const shape = rectangle(0, 0, width, 30)
         super(
-            0,
+            x,
             y,
             shape,
             earcut(shape),
             matrix.translation(0, y)
         )
-        this.width = canvas.width / 8
-        this.speed = Math.random() * 2 + 1
+        this.width = width
+        this.speed = { "x": (Math.random() + 1) * 20, "y": 0 }
+        this.on_screen = false
+        this.stop = true
         game_object.push(this)
     }
     setup() {
-        this.y = Math.random() * 250
-        this.speed = Math.random() * 2 + 1
+        this.x = canvas.width + this.width / 2
+        this.y = Math.random() * 250 + 15
+        this.speed = { "x": (Math.random() + 1) * 20, "y": 0 }
     }
-    set_position(x, y) {
-        this.x = x
-        this.y = y
-        this.transform = matrix.translation(x, y);
-        // this.transofrm = matrix.multiply(translation, this.transform)
+    update(delta) {
+        this.x -= this.speed.x * delta
+        this.y += this.speed.y * delta
+        this.transform = matrix.translation(this.x, this.y)
+    }
+    // set_position(x, y) {
+    //     this.x = x
+    //     this.y = y
+    //     this.transform = matrix.translation(x, y);
+    // }
+    is_on_screen() {
+        if (this.x < canvas.width + this.width / 2 &&
+            this.x > -this.width / 2)
+            return true
+        else {
+            return false
+        }
     }
 }

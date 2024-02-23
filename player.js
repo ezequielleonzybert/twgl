@@ -9,10 +9,13 @@ class Player extends GameObject {
             matrix.translation(x, y)
         )
         this.hook = new Hook(x, y)
+        this.angle = 0
+        this.ang_vel = 0.1
         game_object.push(this)
     }
-    update(time) {
-        const rotation = matrix.rotation(time * 0.01)
+    update(delta) {
+        this.angle += this.ang_vel * delta
+        const rotation = matrix.rotation(this.angle)
         const translation = matrix.translation(canvas.width / 2, canvas.height / 2)
         const translation2 = matrix.translation(0, 100)
         const m1 = matrix.multiply(translation, rotation)
