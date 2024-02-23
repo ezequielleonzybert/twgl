@@ -25,13 +25,13 @@ canvas.addEventListener("fullscreenchange", () => {
     }
     else if (state == 1) {
         state = 0
-        pause_time = document.timeline.currentTime
+        // pause_time = document.timeline.currentTime
         canvas.width = 0
         canvas.height = 0
     }
     else if (state == 0) {
         state = 1
-        unpause_time = document.timeline.currentTime
+        // unpause_time = document.timeline.currentTime
         canvas.width = window.screen.width
         canvas.height = window.screen.height
         render()

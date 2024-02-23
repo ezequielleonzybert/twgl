@@ -9,11 +9,10 @@ class Platform extends GameObject {
             y,
             shape,
             earcut(shape),
-            matrix.translation(0, y)
+            matrix.translation(x, y)
         )
         this.width = width
-        this.speed = { "x": (Math.random() + 1) * 20, "y": 0 }
-        this.on_screen = false
+        this.speed = { "x": (Math.random() + 1) * 5, "y": 0 }
         this.stop = true
         game_object.push(this)
     }
@@ -27,11 +26,6 @@ class Platform extends GameObject {
         this.y += this.speed.y * delta
         this.transform = matrix.translation(this.x, this.y)
     }
-    // set_position(x, y) {
-    //     this.x = x
-    //     this.y = y
-    //     this.transform = matrix.translation(x, y);
-    // }
     is_on_screen() {
         if (this.x < canvas.width + this.width / 2 &&
             this.x > -this.width / 2)
