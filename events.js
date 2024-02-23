@@ -33,3 +33,12 @@ canvas.addEventListener("fullscreenchange", () => {
         render()
     }
 })
+
+document.addEventListener("keydown", (e) => {
+    if (state == 1) {
+        if (player.hung)
+            if (e.key == ' ') {
+                player.hung = false
+            }
+    }
+})
