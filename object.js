@@ -7,7 +7,7 @@ class GameObject {
         this.transform = transform
     }
     get_arrays() {
-        const arrays = {
+        let arrays = {
             a_position: {
                 numComponents: 2,
                 data: this.vertices,
@@ -16,7 +16,17 @@ class GameObject {
                 numComponents: 2,
                 data: this.indices,
             },
+            a_portrait_matrix: {
+                numComponent: 2,
+                data: portrait_matrix,
+            },
         }
+        // if (portrait) {
+        //     arrays.a_portrait_matrix = {
+        //         numComponent: 2,
+        //         data: portrait_matrix,
+        //     }
+        // }
         return arrays
     }
     get_uniforms() {

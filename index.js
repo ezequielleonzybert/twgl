@@ -13,13 +13,14 @@ function setup_dom() {
 
     if (screen_width < screen_height) {
         portrait = true
-        canvas.style.rotate = "90deg"
         canvas.width = screen_height
         canvas.height = screen_width
+        vs = vs_portrait
     }
     else {
         canvas.width = screen_width
         canvas.height = screen_height
+        vs = vs_landscape
     }
     canvas.style.display = "none"
     canvas.style.position = "absolute"
@@ -29,11 +30,11 @@ function setup_dom() {
 let game = new Game()
 
 function app() {
-    programInfo = twgl.createProgramInfo(gl, [vs, fs])
+    program_info = twgl.createProgramInfo(gl, [vs, fs])
 
     game_object.forEach((e) => {
-        const arrays = e.get_arrays();
-        bufferInfo.push(twgl.createBufferInfoFromArrays(gl, arrays))
+        const arrays = e.get_arrays()
+        buffer_info.push(twgl.createBufferInfoFromArrays(gl, arrays))
     })
 
     requestAnimationFrame(render);
@@ -44,21 +45,21 @@ function render(time) {
         if (lastTime != null) {
             const delta = (time - lastTime) * 0.001
 
-            twgl.resizeCanvasToDisplaySize(gl.canvas);
+            twgl.resizeCanvasToDisplaySize(gl.canvas)
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
             gl.clearColor(0.5, 0.5, 0.5, 1)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
-            for (let i = 0; i < bufferInfo.length; i++) {
+            for (let i = 0; i < buffer_info.length; i++) {
                 const uniforms = {
                     u_resolution: [gl.canvas.width, gl.canvas.height],
                     u_transform: game_object[i].transform,
                 }
 
-                gl.useProgram(programInfo.program)
-                twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo[i])
-                twgl.setUniforms(programInfo, uniforms)
-                twgl.drawBufferInfo(gl, bufferInfo[i])
+                gl.useProgram(program_info.program)
+                twgl.setBuffersAndAttributes(gl, program_info, buffer_info[i])
+                twgl.setUniforms(program_info, uniforms)
+                twgl.drawBufferInfo(gl, buffer_info[i])
 
                 game.update(delta)
             }
