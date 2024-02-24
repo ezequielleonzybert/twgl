@@ -11,10 +11,9 @@ function setup_dom() {
     button.style.transform = "translate(-50%, -50%)"
     document.body.appendChild(button)
 
-    const screen_width = window.screen.width
-    const screen_height = window.screen.height
     if (screen_width < screen_height) {
         portrait = true
+        canvas.style.rotate = "90deg"
         canvas.width = screen_height
         canvas.height = screen_width
     }
@@ -25,8 +24,6 @@ function setup_dom() {
     canvas.style.display = "none"
     canvas.style.position = "absolute"
     document.body.appendChild(canvas)
-
-
 }
 
 let game = new Game()
@@ -46,10 +43,11 @@ function render(time) {
     if (state == 1) {
         if (lastTime != null) {
             const delta = (time - lastTime) * 0.001
-            gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
-            gl.clearColor(0.1, 0.1, 0.1, 1)
-            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
+            twgl.resizeCanvasToDisplaySize(gl.canvas);
+            gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
+            gl.clearColor(0.5, 0.5, 0.5, 1)
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
             for (let i = 0; i < bufferInfo.length; i++) {
                 const uniforms = {
