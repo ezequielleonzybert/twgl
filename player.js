@@ -14,7 +14,7 @@ class Player extends GameObject {
         this.angle = 0
         this.ang_acc = 0
         this.ang_vel = 0
-        this.len = canvas.height / 4
+        this.len = 100
         this.hung = true
         this.acc = { x: 0, y: 0 }
         this.vel = { x: 0, y: 0 }

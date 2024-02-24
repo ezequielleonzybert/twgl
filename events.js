@@ -1,6 +1,7 @@
 function fullscreen(e) {
     if (e.requestFullscreen) {
         e.requestFullscreen();
+        // document.exitFullscreen();
     } else if (e.webkitRequestFullscreen) { /* Safari */
         e.webkitRequestFullscreen();
     } else if (e.msRequestFullscreen) { /* IE11 */
@@ -10,25 +11,22 @@ function fullscreen(e) {
     }
 }
 
-window.addEventListener("deviceorientation", (e) => {
-
-})
-
 button.addEventListener("click", () => {
     if (window.screen.width > window.screen.height) {
-        screen_width = window.screen.width
-        screen_height = window.screen.height
-        fullscreen(canvas)
+        canvas.width = window.screen.width
+        canvas.height = window.screen.height
+        fullscreen(container)
     }
     else {
         alert("Please change the device orientation to landscape to play")
     }
 })
 
-canvas.addEventListener("fullscreenchange", () => {
+container.addEventListener("fullscreenchange", () => {
     if (state == -1) {
         state = 1
         canvas.style.display = "block"
+        // overlay.style.display = "block"
         button.innerHTML = "Continue"
         game.setup()
         app()
@@ -36,11 +34,13 @@ canvas.addEventListener("fullscreenchange", () => {
     else if (state == 1) {
         state = 0
         canvas.style.display = "none"
+        // overlay.style.display = "none"
         lastTime = null
     }
     else if (state == 0) {
         state = 1
         canvas.style.display = "block"
+        // overlay.style.display = "block"
         render()
     }
 })
@@ -51,5 +51,12 @@ document.addEventListener("keydown", (e) => {
             if (e.key == ' ') {
                 player.hung = false
             }
+    }
+})
+
+screen.orientation.addEventListener("change", (e) => {
+    if (state == 1 &&
+        e.target.type == "portrait-primary" || e.target.type == "portrait_secondary") {
+        alert("Please change the device orientation to landscape to play")
     }
 })

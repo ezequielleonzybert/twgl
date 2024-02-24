@@ -1,8 +1,9 @@
-let screen_width = window.screen.width
-let screen_height = window.screen.height
+const container = document.createElement("div")
 const canvas = document.createElement("canvas")
 const button = document.createElement("button")
 const gl = canvas.getContext("webgl2")
+const overlay = document.createElement("div")
+let overlay_text = ""
 let program_info
 let buffer_info = []
 let transform = []
