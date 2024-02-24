@@ -11,11 +11,22 @@ function setup_dom() {
     button.style.transform = "translate(-50%, -50%)"
     document.body.appendChild(button)
 
-    canvas.width = window.screen.width
-    canvas.height = window.screen.height
+    const screen_width = window.screen.width
+    const screen_height = window.screen.height
+    if (screen_width < screen_height) {
+        portrait = true
+        canvas.width = screen_height
+        canvas.height = screen_width
+    }
+    else {
+        canvas.width = screen_width
+        canvas.height = screen_height
+    }
     canvas.style.display = "none"
     canvas.style.position = "absolute"
     document.body.appendChild(canvas)
+
+
 }
 
 let game = new Game()

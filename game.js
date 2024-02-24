@@ -12,7 +12,6 @@ class Game {
     update(delta) {
         for (let i = 0; i < platform.length; i++) {
             const platform_width = platform[i].width
-            const origin_x = canvas.width + platform_width
 
             let running_platforms = 0
             for (let j = 0; j < platform.length; j++) {

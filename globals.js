@@ -8,3 +8,4 @@ let state = -1
 let lastTime
 let counter = 0
 let game_object = []
+let portrait = false;

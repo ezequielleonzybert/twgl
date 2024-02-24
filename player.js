@@ -1,6 +1,7 @@
 class Player extends GameObject {
     constructor(x, y) {
-        const shape = circle(0, 0, 30, 30)
+        const radius = canvas.height * 0.025
+        const shape = circle(0, 0, radius, 30)
         super(
             x,
             y,
@@ -8,11 +9,12 @@ class Player extends GameObject {
             earcut(shape),
             matrix.translation(x, y)
         )
-        this.hook = new Hook(x, y - 100)
+        this.radius = radius
+        this.hook = new Hook(x, y - 100, this.radius / 4)
         this.angle = 0
         this.ang_acc = 0
         this.ang_vel = 0
-        this.len = 300
+        this.len = canvas.height / 4
         this.hung = true
         this.acc = { x: 0, y: 0 }
         this.vel = { x: 0, y: 0 }
@@ -38,8 +40,8 @@ class Player extends GameObject {
 }
 
 class Hook extends GameObject {
-    constructor(x, y) {
-        const shape = circle(0, 0, 7, 6)
+    constructor(x, y, r) {
+        const shape = circle(0, 0, r, 10)
         super(
             x,
             y,
