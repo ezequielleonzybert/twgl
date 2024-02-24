@@ -11,17 +11,8 @@ function setup_dom() {
     button.style.transform = "translate(-50%, -50%)"
     document.body.appendChild(button)
 
-    if (screen_width < screen_height) {
-        portrait = true
-        canvas.width = screen_height
-        canvas.height = screen_width
-        vs = vs_portrait
-    }
-    else {
-        canvas.width = screen_width
-        canvas.height = screen_height
-        vs = vs_landscape
-    }
+    canvas.width = screen_width
+    canvas.height = screen_height
     canvas.style.display = "none"
     canvas.style.position = "absolute"
     document.body.appendChild(canvas)
@@ -35,12 +26,6 @@ function app() {
     game_object.forEach((e) => {
         const arrays = e.get_arrays()
         buffer_info.push(twgl.createBufferInfoFromArrays(gl, arrays))
-    })
-
-    gl.useProgram(program_info.program)
-    twgl.setUniforms(program_info, {
-        u_portrait_translation: portrait_translation,
-        u_portrait_rotation: portrait_rotation,
     })
 
     requestAnimationFrame(render);
@@ -62,7 +47,7 @@ function render(time) {
                     u_transform: game_object[i].transform,
                 }
 
-                //gl.useProgram(program_info.program)
+                gl.useProgram(program_info.program)
                 twgl.setBuffersAndAttributes(gl, program_info, buffer_info[i])
                 twgl.setUniforms(program_info, uniforms)
                 twgl.drawBufferInfo(gl, buffer_info[i])

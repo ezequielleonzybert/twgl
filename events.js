@@ -10,8 +10,19 @@ function fullscreen(e) {
     }
 }
 
+window.addEventListener("deviceorientation", (e) => {
+
+})
+
 button.addEventListener("click", () => {
-    fullscreen(canvas)
+    if (window.screen.width > window.screen.height) {
+        screen_width = window.screen.width
+        screen_height = window.screen.height
+        fullscreen(canvas)
+    }
+    else {
+        alert("Please change the device orientation to landscape to play")
+    }
 })
 
 canvas.addEventListener("fullscreenchange", () => {
