@@ -8,9 +8,11 @@ function setup_dom() {
     button.style.left = "50%"
     button.style.position = "absolute"
     button.innerText = "Start"
-    button.style.width = "200px"
-    button.style.height = "200px"
+    button.style.width = `${window.devicePixelRatio * 150}px`
+    button.style.height = `${window.devicePixelRatio * 50}px`
     button.style.transform = "translate(-50%, -50%)"
+    button.style.fontFamily = "monospace"
+    button.style.fontSize = `${window.devicePixelRatio * 20}px`
     document.body.appendChild(button)
 
     canvas.width = window.screen.width

@@ -18,7 +18,13 @@ button.addEventListener("click", () => {
         fullscreen(container)
     }
     else {
-        alert("Please change the device orientation to landscape to play")
+        alert("Please change the device orientation to landscape in order to play")
+    }
+})
+screen.orientation.addEventListener("change", (e) => {
+    if (state == 1 &&
+        e.target.type == "portrait-primary" || e.target.type == "portrait_secondary") {
+        alert("Please change the device orientation to landscape in order to play")
     }
 })
 
@@ -54,9 +60,3 @@ document.addEventListener("keydown", (e) => {
     }
 })
 
-screen.orientation.addEventListener("change", (e) => {
-    if (state == 1 &&
-        e.target.type == "portrait-primary" || e.target.type == "portrait_secondary") {
-        alert("Please change the device orientation to landscape to play")
-    }
-})
