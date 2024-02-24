@@ -37,6 +37,12 @@ function app() {
         buffer_info.push(twgl.createBufferInfoFromArrays(gl, arrays))
     })
 
+    gl.useProgram(program_info.program)
+    twgl.setUniforms(program_info, {
+        u_portrait_translation: portrait_translation,
+        u_portrait_rotation: portrait_rotation,
+    })
+
     requestAnimationFrame(render);
 }
 
@@ -56,7 +62,7 @@ function render(time) {
                     u_transform: game_object[i].transform,
                 }
 
-                gl.useProgram(program_info.program)
+                //gl.useProgram(program_info.program)
                 twgl.setBuffersAndAttributes(gl, program_info, buffer_info[i])
                 twgl.setUniforms(program_info, uniforms)
                 twgl.drawBufferInfo(gl, buffer_info[i])

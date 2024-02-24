@@ -12,8 +12,5 @@ let lastTime
 let counter = 0
 let game_object = []
 let portrait = false
-const portrait_matrix = matrix.identity()
-// matrix.multiply(
-//     matrix.translation(screen_width, 0),
-//     matrix.rotation(-Math.PI / 2))
-let log
+const portrait_translation = matrix.translation(0, -screen_width)
+const portrait_rotation = matrix.rotation(Math.PI / 2)

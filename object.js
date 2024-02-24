@@ -16,17 +16,7 @@ class GameObject {
                 numComponents: 2,
                 data: this.indices,
             },
-            a_portrait_matrix: {
-                numComponent: 2,
-                data: portrait_matrix,
-            },
         }
-        // if (portrait) {
-        //     arrays.a_portrait_matrix = {
-        //         numComponent: 2,
-        //         data: portrait_matrix,
-        //     }
-        // }
         return arrays
     }
     get_uniforms() {
