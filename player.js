@@ -22,9 +22,9 @@ class Player extends GameObject {
     }
     update(delta) {
         if (this.hung) {
-            this.ang_acc = -Math.cos(this.angle) * delta * 0.5 / this.len
+            this.ang_acc = -Math.cos(this.angle) * 0.5 / this.len * 0.01
             this.ang_vel += this.ang_acc
-            this.angle += this.ang_vel
+            this.angle += (this.ang_vel * delta)
 
             this.transform = matrix.multiply(
                 matrix.translation(this.hook.x, this.hook.y),
@@ -32,9 +32,6 @@ class Player extends GameObject {
             this.transform = matrix.multiply(
                 this.transform,
                 matrix.translation(this.len, 0))
-        }
-        else {
-
         }
     }
 }

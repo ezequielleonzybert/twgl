@@ -64,8 +64,13 @@ function render(time) {
 
                 game.update(delta)
             }
-            counter++
         }
+
+        counter++
+        if (!counter || counter % 10 == 0)
+            overlay.innerHTML =
+                "fps: " + Math.round(1 / ((time - lastTime) / 1000)) + "<br>" +
+                "pendulum velocity: " + Math.round(player.ang_vel * 100)
 
         lastTime = time
         requestAnimationFrame(render)

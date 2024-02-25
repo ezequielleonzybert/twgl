@@ -12,3 +12,4 @@ let lastTime
 let counter = 0
 let game_object = []
 let landscape
+const frame_interval = 1000 / 60
