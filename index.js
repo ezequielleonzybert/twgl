@@ -52,7 +52,7 @@ function render(now) {
 
         if (then !== undefined && then !== now) {
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
-            gl.clearColor(0.5, 0.5, 0.5, 1)
+            gl.clearColor(0.1, 0.1, 0.1, 1)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
             for (let i = 0; i < buffer_info.length; i++) {

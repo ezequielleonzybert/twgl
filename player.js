@@ -14,7 +14,7 @@ class Player extends GameObject {
         this.angle = 0
         this.ang_acc = 0
         this.ang_vel = 0
-        this.len = 100
+        this.len = 150
         this.hung = true
         this.acc = { x: 0, y: 0 }
         this.vel = { x: 0, y: 0 }
@@ -22,7 +22,7 @@ class Player extends GameObject {
     }
     update(delta) {
         if (this.hung) {
-            this.ang_acc = -Math.cos(this.angle) * 0.0001 / this.len
+            this.ang_acc = -Math.cos(this.angle) * 0.00005 / this.len
             this.ang_vel += (this.ang_acc * delta)
             this.angle += (this.ang_vel * delta)
 
