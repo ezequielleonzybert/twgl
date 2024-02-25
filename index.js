@@ -45,13 +45,13 @@ function render(now) {
     if (state == 1) {
 
         counter++
-        if (!counter || counter % 10 == 0) {
+        if (!counter || counter % 20 == 0) {
             overlay.innerHTML =
                 "fps: " + Math.round(1000 / (now - then)) + "<br>" +
                 "delta: " + (now - then)
         }
 
-        if (then != undefined) {
+        if (then !== undefined && then !== now) {
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
             gl.clearColor(0.5, 0.5, 0.5, 1)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)

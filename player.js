@@ -22,8 +22,8 @@ class Player extends GameObject {
     }
     update(delta) {
         if (this.hung) {
-            this.ang_acc = -Math.cos(this.angle) * 0.001 / this.len
-            this.ang_vel += this.ang_acc
+            this.ang_acc = -Math.cos(this.angle) * 0.1 / this.len
+            this.ang_vel += (this.ang_acc * delta)
             this.angle += (this.ang_vel * delta)
 
             this.transform = matrix.multiply(
