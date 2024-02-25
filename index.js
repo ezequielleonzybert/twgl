@@ -25,7 +25,6 @@ function setup_dom() {
     overlay.style.position = "absolute"
     overlay.style.padding = "10px"
     overlay.style.fontFamily = "monospace"
-    overlay.innerHTML = overlay_text
     container.appendChild(overlay)
 }
 
@@ -42,11 +41,21 @@ function app() {
     requestAnimationFrame(render);
 }
 
-function render(time) {
+function render(now) {
     if (state == 1) {
-        if (lastTime != null) {
-            const delta = (time - lastTime) * 0.001
+        if (start === undefined) {
+            start = now
+        }
 
+        counter++
+        if (!counter || counter % 10 == 0) {
+            overlay.innerHTML =
+                "fps: " + Math.round(1000 / (now - then))
+        }
+
+        const elapsed = now - start
+
+        if (then !== now) {
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
             gl.clearColor(0.5, 0.5, 0.5, 1)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -62,19 +71,13 @@ function render(time) {
                 twgl.setUniforms(program_info, uniforms)
                 twgl.drawBufferInfo(gl, buffer_info[i])
 
-                game.update(delta)
+                game.update()
             }
         }
-
-        counter++
-        if (!counter || counter % 10 == 0)
-            overlay.innerHTML =
-                "fps: " + Math.round(1 / ((time - lastTime) / 1000)) + "<br>" +
-                "pendulum velocity: " + Math.round(player.ang_vel * 100)
-
-        lastTime = time
-        requestAnimationFrame(render)
     }
+    then = now
+    requestAnimationFrame(render)
 }
 
 setup_dom()
+

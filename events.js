@@ -32,7 +32,7 @@ container.addEventListener("fullscreenchange", () => {
     if (state == -1) {
         state = 1
         canvas.style.display = "block"
-        // overlay.style.display = "block"
+        overlay.style.display = "block"
         button.innerHTML = "Continue"
         game.setup()
         app()
@@ -40,13 +40,13 @@ container.addEventListener("fullscreenchange", () => {
     else if (state == 1) {
         state = 0
         canvas.style.display = "none"
-        // overlay.style.display = "none"
+        overlay.style.display = "none"
         lastTime = null
     }
     else if (state == 0) {
         state = 1
         canvas.style.display = "block"
-        // overlay.style.display = "block"
+        overlay.style.display = "block"
         render()
     }
 })

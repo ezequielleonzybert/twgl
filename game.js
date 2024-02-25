@@ -9,7 +9,7 @@ class Game {
         }
         window.setTimeout(() => { platform[0].stop = false }, 1000)
     }
-    update(delta) {
+    update() {
         for (let i = 0; i < platform.length; i++) {
             const platform_width = platform[i].width
 
@@ -28,12 +28,12 @@ class Game {
             }
 
             if (!platform[i].stop)
-                platform[i].update(delta)
+                platform[i].update()
 
             if (platform[i].x < -platform[i].width / 2) {
                 platform[i].setup()
             }
         }
-        player.update(delta)
+        player.update()
     }
 }

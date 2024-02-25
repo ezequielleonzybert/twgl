@@ -20,11 +20,11 @@ class Player extends GameObject {
         this.vel = { x: 0, y: 0 }
         game_object.push(this)
     }
-    update(delta) {
+    update() {
         if (this.hung) {
-            this.ang_acc = -Math.cos(this.angle) * 0.5 / this.len * 0.01
+            this.ang_acc = -Math.cos(this.angle) * 0.01 / this.len
             this.ang_vel += this.ang_acc
-            this.angle += (this.ang_vel * delta)
+            this.angle += this.ang_vel
 
             this.transform = matrix.multiply(
                 matrix.translation(this.hook.x, this.hook.y),
