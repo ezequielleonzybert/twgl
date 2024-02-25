@@ -39,6 +39,7 @@ container.addEventListener("fullscreenchange", () => {
     }
     else if (state == 1) {
         state = 0
+        then = undefined
         canvas.style.display = "none"
         overlay.style.display = "none"
         lastTime = null
@@ -49,6 +50,10 @@ container.addEventListener("fullscreenchange", () => {
         overlay.style.display = "block"
         render()
     }
+})
+
+window.addEventListener("blur", (e) => {
+    document.exitFullscreen()
 })
 
 document.addEventListener("keydown", (e) => {

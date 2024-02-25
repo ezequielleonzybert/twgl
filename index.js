@@ -43,19 +43,15 @@ function app() {
 
 function render(now) {
     if (state == 1) {
-        if (start === undefined) {
-            start = now
-        }
 
         counter++
         if (!counter || counter % 10 == 0) {
             overlay.innerHTML =
-                "fps: " + Math.round(1000 / (now - then))
+                "fps: " + Math.round(1000 / (now - then)) + "<br>" +
+                "delta: " + (now - then)
         }
 
-        const elapsed = now - start
-
-        if (then !== now) {
+        if (then != undefined) {
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
             gl.clearColor(0.5, 0.5, 0.5, 1)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -71,12 +67,12 @@ function render(now) {
                 twgl.setUniforms(program_info, uniforms)
                 twgl.drawBufferInfo(gl, buffer_info[i])
 
-                game.update()
+                game.update(now - then)
             }
         }
+        then = now
+        requestAnimationFrame(render)
     }
-    then = now
-    requestAnimationFrame(render)
 }
 
 setup_dom()

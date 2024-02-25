@@ -14,18 +14,18 @@ class Platform extends GameObject {
         )
         this.width = width
         this.height = height
-        this.speed = { "x": (Math.random() + 1), "y": 0 }
+        this.speed = { "x": (Math.random() + 1) * 0.01, "y": 0 }
         this.stop = true
         game_object.push(this)
     }
     setup() {
         this.x = canvas.width + this.width / 2
         this.y = Math.random() * canvas.height * 0.4 + this.height
-        this.speed = { "x": (Math.random() + 1), "y": 0 }
+        this.speed = { "x": (Math.random() + 1) * 0.01, "y": 0 }
     }
-    update() {
-        this.x -= this.speed.x
-        this.y += this.speed.y
+    update(delta) {
+        this.x -= this.speed.x * delta
+        this.y += this.speed.y * delta
         this.transform = matrix.translation(this.x, this.y)
     }
     is_on_screen() {
