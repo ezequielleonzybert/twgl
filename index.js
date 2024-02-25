@@ -47,8 +47,7 @@ function render(now) {
         counter++
         if (!counter || counter % 20 == 0) {
             overlay.innerHTML =
-                "fps: " + Math.round(1000 / (now - then)) + "<br>" +
-                "delta: " + (now - then)
+                "fps: " + Math.round(1000 / (now - then))
         }
 
         if (then !== undefined && then !== now) {
