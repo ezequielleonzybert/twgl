@@ -44,15 +44,19 @@ function app() {
 function render(now) {
     if (state == 1) {
 
+        const style = getComputedStyle(document.documentElement);
+        const notch_height = style.getPropertyValue("--notch");
+
         counter++
-        if (!counter || counter % 20 == 0) {
+        if (counter == 1 || counter % 20 == 0) {
             overlay.innerHTML =
-                "fps: " + Math.round(1000 / (now - then))
+                "fps: " + Math.round(1000 / (now - then)) + "<br>" +
+                "notch_height: " + notch_height
         }
 
         if (then !== undefined && then !== now) {
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
-            gl.clearColor(0.1, 0.1, 0.1, 1)
+            gl.clearColor(0.5, 0.1, 0.1, 1)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
             for (let i = 0; i < buffer_info.length; i++) {

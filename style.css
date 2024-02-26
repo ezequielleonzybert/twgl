@@ -1,0 +1,4 @@
+:root {
+    --notch_height: env(safe-area-inset-top);
+    --notch: var(--notch_height)
+}
