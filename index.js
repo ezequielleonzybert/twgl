@@ -45,7 +45,7 @@ function render(now) {
     if (state == 1) {
 
         const style = getComputedStyle(document.documentElement);
-        const notch_height = style.getPropertyValue("--notch");
+        const notch_height = style.getPropertyValue("--notch_height");
 
         counter++
         if (counter == 1 || counter % 20 == 0) {
