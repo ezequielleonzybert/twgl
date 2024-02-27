@@ -1,4 +1,10 @@
 function setup_dom() {
+
+    style = getComputedStyle(document.documentElement);
+    inset_left = style.getPropertyValue("--inset_left");
+
+    console.log(inset_left)
+
     document.body.style.margin = 0
     document.body.style.padding = 0
 
@@ -44,14 +50,11 @@ function app() {
 function render(now) {
     if (state == 1) {
 
-        const style = getComputedStyle(document.documentElement);
-        const notch_height = style.getPropertyValue("--notch_height");
-
         counter++
         if (counter == 1 || counter % 20 == 0) {
             overlay.innerHTML =
                 "fps: " + Math.round(1000 / (now - then)) + "<br>" +
-                "notch_height: " + notch_height
+                "inset_left: " + inset_left
         }
 
         if (then !== undefined && then !== now) {

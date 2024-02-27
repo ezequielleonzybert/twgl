@@ -3,8 +3,8 @@ const canvas = document.createElement("canvas")
 const button = document.createElement("button")
 const gl = canvas.getContext("webgl2")
 const overlay = document.createElement("div")
-// const style = getComputedStyle(document.documentElement);
-// const notch_height = style.getPropertyValue("--notch_height");
+let style
+let inset_left
 let program_info
 let buffer_info = []
 let transform = []

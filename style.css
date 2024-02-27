@@ -1,4 +1,6 @@
 :root {
-    --notch_height: env(safe-area-inset-left);
-    --notch: var(--notch_height)
+    --inset_left: env(safe-area-inset-left);
+    --inset_top: env(safe-area-inset-top);
+    --inset_right: env(safe-area-inset-right);
+    --inset_bottom: env(safe-area-inset-bottom);
 }
