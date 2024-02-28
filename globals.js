@@ -4,7 +4,6 @@ const button = document.createElement("button")
 const gl = canvas.getContext("webgl2")
 const overlay = document.createElement("div")
 let style
-let inset_left
 let program_info
 let buffer_info = []
 let transform = []

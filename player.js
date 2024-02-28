@@ -10,11 +10,11 @@ class Player extends GameObject {
             matrix.translation(x, y)
         )
         this.radius = radius
-        this.hook = new Hook(x, y - 100, this.radius / 4)
+        this.hook = new Hook(x, y - canvas.height / 5, this.radius / 4)
         this.angle = 0
         this.ang_acc = 0
         this.ang_vel = 0
-        this.len = 150
+        this.len = canvas.height / 5
         this.hung = true
         this.acc = { x: 0, y: 0 }
         this.vel = { x: 0, y: 0 }

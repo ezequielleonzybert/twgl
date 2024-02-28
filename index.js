@@ -1,13 +1,5 @@
 function setup_dom() {
 
-    style = getComputedStyle(document.documentElement);
-    inset_left = style.getPropertyValue("--inset_left");
-
-    console.log(inset_left)
-
-    document.body.style.margin = 0
-    document.body.style.padding = 0
-
     document.body.appendChild(container)
 
     button.style.top = "50%"
@@ -21,8 +13,6 @@ function setup_dom() {
     button.style.fontSize = `${window.devicePixelRatio * 20}px`
     document.body.appendChild(button)
 
-    canvas.width = window.screen.width
-    canvas.height = window.screen.height
     canvas.style.display = "none"
     canvas.style.position = "absolute"
     container.appendChild(canvas)
@@ -54,12 +44,14 @@ function render(now) {
         if (counter == 1 || counter % 20 == 0) {
             overlay.innerHTML =
                 "fps: " + Math.round(1000 / (now - then)) + "<br>" +
-                "inset_left: " + inset_left
+                "gl.canvas.width: " + gl.canvas.width + "<br>" +
+                "gl.vancas.height: " + gl.canvas.height
         }
 
         if (then !== undefined && then !== now) {
+            // webglUtils.resizeCanvasToDisplaySize(gl.canvas);
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
-            gl.clearColor(0.5, 0.1, 0.1, 1)
+            gl.clearColor(0.7, 0.7, 0.1, 1)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
             for (let i = 0; i < buffer_info.length; i++) {

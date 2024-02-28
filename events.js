@@ -1,7 +1,6 @@
 function fullscreen(e) {
     if (e.requestFullscreen) {
         e.requestFullscreen();
-        // document.exitFullscreen();
     } else if (e.webkitRequestFullscreen) { /* Safari */
         e.webkitRequestFullscreen();
     } else if (e.msRequestFullscreen) { /* IE11 */
@@ -13,9 +12,8 @@ function fullscreen(e) {
 
 button.addEventListener("click", () => {
     if (window.screen.width > window.screen.height) {
-        canvas.width = window.screen.width
-        canvas.height = window.screen.height
         fullscreen(container)
+
     }
     else {
         alert("Please change the device orientation to landscape in order to play")
@@ -34,8 +32,12 @@ container.addEventListener("fullscreenchange", () => {
         canvas.style.display = "block"
         overlay.style.display = "block"
         button.innerHTML = "Continue"
-        game.setup()
-        app()
+        setTimeout(() => {
+            canvas.width = canvas.offsetWidth
+            canvas.height = canvas.offsetHeight
+            game.setup()
+            app()
+        }, 10)
     }
     else if (state == 1) {
         state = 0
@@ -52,9 +54,10 @@ container.addEventListener("fullscreenchange", () => {
     }
 })
 
-window.addEventListener("blur", (e) => {
-    document.exitFullscreen()
-})
+// window.addEventListener("blur", (e) => {
+//     if (state == 1)
+//         document.exitFullscreen()
+// })
 
 document.addEventListener("keydown", (e) => {
     if (state == 1) {
