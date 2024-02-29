@@ -1,7 +1,6 @@
 class GameObject {
-    constructor(x, y, vertices, indices, transform) {
-        this.x = x
-        this.y = y
+    constructor(pos, vertices, indices, transform) {
+        this.pos = pos
         this.vertices = vertices
         this.indices = indices
         this.transform = transform

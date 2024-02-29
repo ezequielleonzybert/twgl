@@ -13,8 +13,6 @@ class Game {
     }
     update(delta) {
         for (let i = 0; i < platform.length; i++) {
-            const platform_width = platform[i].width
-
             let running_platforms = 0
             for (let j = 0; j < platform.length; j++) {
                 if (!platform[j].stop) {
@@ -25,14 +23,14 @@ class Game {
             const prev_platform = platform[Math.max(running_platforms - 1, 0)]
             if (
                 running_platforms < platform.length &&
-                prev_platform.x < canvas.width - prev_platform.width / 2) {
+                prev_platform.pos.x < canvas.width - prev_platform.width / 2) {
                 platform[i].stop = false
             }
 
             if (!platform[i].stop)
                 platform[i].update(delta)
 
-            if (platform[i].x < -platform[i].width / 2) {
+            if (platform[i].pos.x < -platform[i].width / 2) {
                 platform[i].setup()
             }
         }

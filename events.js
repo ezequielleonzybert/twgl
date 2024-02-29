@@ -63,10 +63,9 @@ container.addEventListener("fullscreenchange", () => {
 
 document.addEventListener("keydown", (e) => {
     if (state == 1) {
-        if (player.hung)
-            if (e.key == ' ') {
-                player.hung = !player.hung
-            }
+        if (e.key == ' ') {
+            player.release(delta)
+        }
     }
 })
 
@@ -74,7 +73,7 @@ canvas.addEventListener("touchstart", (e) => {
     const touchlist = e.changedTouches
     for (let i = 0; i < touchlist.length; i++) {
         if (touchlist.item(i).clientX > canvas.width / 2) {
-            player.hung = !player.hung
+            player.release(delta)
         }
     }
 })

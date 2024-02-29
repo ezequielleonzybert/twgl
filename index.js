@@ -66,7 +66,8 @@ function render(now) {
                 twgl.setUniforms(program_info, uniforms)
                 twgl.drawBufferInfo(gl, buffer_info[i])
 
-                game.update(now - then)
+                delta = now - then
+                game.update(delta)
             }
         }
         then = now
