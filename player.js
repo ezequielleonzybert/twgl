@@ -72,6 +72,5 @@ class Hook extends GameObject {
     }
 
     update(delta) {
-        this.transform = 
     }
 }
