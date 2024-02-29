@@ -71,9 +71,10 @@ document.addEventListener("keydown", (e) => {
 })
 
 canvas.addEventListener("touchstart", (e) => {
-    let x = e.touches[0].clientX
-    let y = e.touches[0].clientY
-    if (x > canvas.width / 2) {
-        player.hung = !player.hung
+    const touchlist = e.changedTouches
+    for (let i = 0; i < touchlist.length; i++) {
+        if (touchlist.item(i).clientX > canvas.width / 2) {
+            player.hung = !player.hung
+        }
     }
 })
