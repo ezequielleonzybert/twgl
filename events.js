@@ -75,7 +75,6 @@ canvas.addEventListener("touchstart", (e) => {
     for (let i = 0; i < touchlist.length; i++) {
         if (touchlist.item(i).clientX > canvas.width / 2) {
             player.hung = !player.hung
-            player.pos = {}
         }
     }
 })

@@ -27,9 +27,11 @@ class Player extends GameObject {
             this.ang_vel += (this.ang_acc * delta)
             this.angle += (this.ang_vel * delta)
 
+            //rotation pivot position
             this.transform = matrix.multiply(
                 matrix.translation(this.hook.x, this.hook.y),
                 matrix.rotation(this.angle))
+            //bob position
             this.transform = matrix.multiply(
                 this.transform,
                 matrix.translation(this.len, 0))
