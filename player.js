@@ -18,6 +18,7 @@ class Player extends GameObject {
         this.hung = true
         this.acc = { x: 0, y: 0 }
         this.vel = { x: 0, y: 0 }
+        this.pos = { x: x, y: y }
         game_object.push(this)
     }
     update(delta) {
@@ -32,6 +33,15 @@ class Player extends GameObject {
             this.transform = matrix.multiply(
                 this.transform,
                 matrix.translation(this.len, 0))
+        }
+        else {
+            this.acc.y = 0.001
+            this.vel.x += this.acc.x
+            this.vel.y += this.acc.y
+            this.pos.x += this.vel.x
+            this.pos.y += this.vel.y
+
+            this.transform = matrix.translation(this.pos.x, this.pos.y)
         }
     }
 }
