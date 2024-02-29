@@ -3,6 +3,7 @@ const canvas = document.createElement("canvas")
 const button = document.createElement("button")
 const gl = canvas.getContext("webgl2")
 const overlay = document.createElement("div")
+let overlay_content
 let style
 let program_info
 let buffer_info = []

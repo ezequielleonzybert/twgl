@@ -1,3 +1,5 @@
+//All the input events
+
 function fullscreen(e) {
     if (e.requestFullscreen) {
         e.requestFullscreen();
@@ -68,3 +70,10 @@ document.addEventListener("keydown", (e) => {
     }
 })
 
+canvas.addEventListener("touchstart", (e) => {
+    let x = e.touches[0].clientX
+    let y = e.touches[0].clientY
+    if (x > canvas.width / 2) {
+        player.hung = !player.hung
+    }
+})

@@ -37,16 +37,17 @@ function app() {
     requestAnimationFrame(render);
 }
 
+// Render loop
 function render(now) {
     if (state == 1) {
 
-        counter++
-        if (counter == 1 || counter % 20 == 0) {
-            overlay.innerHTML =
-                "fps: " + Math.round(1000 / (now - then)) + "<br>" +
-                "gl.canvas.width: " + gl.canvas.width + "<br>" +
-                "gl.vancas.height: " + gl.canvas.height
-        }
+        // counter++
+        // if (counter == 1 || counter % 20 == 0) {
+        //     overlay.innerHTML = overlay_content
+        //     // "fps: " + Math.round(1000 / (now - then)) + "<br>" +
+        //     // "gl.canvas.width: " + gl.canvas.width + "<br>" +
+        //     // "gl.vancas.height: " + gl.canvas.height
+        // }
 
         if (then !== undefined && then !== now) {
             // webglUtils.resizeCanvasToDisplaySize(gl.canvas);

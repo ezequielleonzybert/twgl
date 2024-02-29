@@ -1,3 +1,5 @@
+// Game abstraction
+
 let player
 let platform = []
 
