@@ -43,23 +43,23 @@ function render(now) {
 
         // counter++
         // if (counter == 1 || counter % 20 == 0) {
-        //     overlay.innerHTML = overlay_content
-        //     // "fps: " + Math.round(1000 / (now - then)) + "<br>" +
-        //     // "gl.canvas.width: " + gl.canvas.width + "<br>" +
-        //     // "gl.vancas.height: " + gl.canvas.height
+        //     overlay.innerHTML = //overlay_content
+        //         "fps: " + Math.round(1000 / (now - then)) + "<br>" +
+        //         "gl.canvas.width: " + gl.canvas.width + "<br>" +
+        //         "gl.vancas.height: " + gl.canvas.height
         // }
 
         if (then !== undefined && then !== now) {
             // webglUtils.resizeCanvasToDisplaySize(gl.canvas);
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
-            gl.clearColor(0.7, 0.7, 0.1, 1)
+            gl.clearColor(0.1, 0.1, 0.1, 1)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
             for (let i = 0; i < buffer_info.length; i++) {
                 const uniforms = {
                     u_resolution: [gl.canvas.width, gl.canvas.height],
                     u_transform: game_object[i].transform,
-                    u_color: [1, 0, 0, 1],
+                    u_color: game_object[i].color,
                 }
 
                 gl.useProgram(program_info.program)

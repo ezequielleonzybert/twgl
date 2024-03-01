@@ -68,8 +68,7 @@ document.addEventListener("keydown", (e) => {
                 player.release(delta)
             }
             else {
-                player.hook.state = "shooting"
-                player.hook.counter = 0
+                player.hook.shoot()
             }
         }
     }

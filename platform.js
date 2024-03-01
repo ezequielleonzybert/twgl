@@ -9,7 +9,8 @@ class Platform extends GameObject {
             { x: x, y: y },
             shape,
             earcut(shape),
-            matrix.translation(x, y)
+            matrix.translation(x, y),
+            [0.3, 0.3, 0.7, 1]
         )
         this.width = width
         this.height = height

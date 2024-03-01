@@ -6,7 +6,8 @@ class Player extends GameObject {
             { x: x, y: y },
             shape,
             earcut(shape),
-            matrix.translation(x, y)
+            matrix.translation(x, y),
+            [0.9, 0.1, 0.1, 1]
         )
         this.radius = radius
         this.hook = new Hook(x, y - 100, this.radius / 4)
@@ -70,15 +71,19 @@ class Hook extends GameObject {
             { x: x, y: y },
             shape,
             earcut(shape),
-            matrix.translation(x, y)
+            matrix.translation(x, y),
+            [1, 0.5, 0.5, 1]
         )
         this.state = "hanging"
         this.counter = 0
-        this.attraction = 1
+        this.target
+        this.origin
         game_object.push(this)
     }
 
     update(delta) {
+        this.pos.x = this.transform[6]
+        this.pos.y = this.transform[7]
         if (this.state == "hanging") {
 
         }
@@ -86,26 +91,33 @@ class Hook extends GameObject {
             this.transform = matrix.translation(player.pos.x, player.pos.y)
         }
         else if (this.state == "shooting") {
-
-
-
-            // if (this.counter < 2) {
-            //     let b
-            //     if (this.counter < 1) {
-            //         b = bezier([0, 0], [1, 0], [0, 1], [1, 1], this.counter)
-            //     }
-            //     else {
-            //         b = bezier([0, 1], [1, 1], [0, 0], [1, 0], this.counter - 1)
-            //     }
-            //     this.transform = matrix.translation(player.pos.x, player.pos.y - 300 * b.y)
-            //     this.counter += 0.005
-            // }
-            // else {
-            //     this.state = "idle"
-            // }
+            if (this.counter < 2) {
+                if (this.counter < 1) {
+                    const b = bezier([0, 0], [1, 0], [0, 1], [1, 1], this.counter)
+                    this.transform = matrix.translation(
+                        this.origin.x + this.target.x * b.y,
+                        this.origin.y + this.target.y * b.y)
+                }
+                else {
+                    const b = bezier([0, 1], [1, 1], [0, 0], [1, 0], this.counter - 1)
+                    this.transform = matrix.translation(
+                        player.pos.x + (this.origin.x - player.pos.x + this.target.x) * b.y,
+                        player.pos.y + (this.origin.y - player.pos.y + this.target.y) * b.y)
+                }
+                this.counter += 0.005
+            }
+            else {
+                this.state = "idle"
+            }
         }
         else if (this.state == "idle") {
             this.transform = matrix.translation(player.pos.x, player.pos.y)
         }
+    }
+    shoot() {
+        this.state = "shooting"
+        this.counter = 0
+        this.origin = { ...this.pos }
+        this.target = { x: 100, y: 100 }
     }
 }
