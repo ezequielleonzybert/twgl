@@ -64,7 +64,13 @@ container.addEventListener("fullscreenchange", () => {
 document.addEventListener("keydown", (e) => {
     if (state == 1) {
         if (e.key == ' ') {
-            player.release(delta)
+            if (player.hung) {
+                player.release(delta)
+            }
+            else {
+                player.hook.state = "shooting"
+                player.hook.counter = 0
+            }
         }
     }
 })

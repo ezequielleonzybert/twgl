@@ -13,6 +13,7 @@ void main() {
 const fs = `#version 300 es
 precision lowp float;
 out vec4 outColor;
+uniform vec4 u_color;
 void main() {
-  outColor = vec4(1, 0, 0.5, 1);
+  outColor = u_color;
 }`

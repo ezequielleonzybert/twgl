@@ -34,8 +34,8 @@ class Player extends GameObject {
                 this.transform,
                 matrix.translation(this.len, 0))
             // update positions
-            this.pos.x = this.transform[2]
-            this.pos.y = this.transform[5]
+            this.pos.x = this.transform[6]
+            this.pos.y = this.transform[7]
         }
         else {
             this.acc.y = 0.000025
@@ -48,14 +48,18 @@ class Player extends GameObject {
                 matrix.translation(this.pos.x, this.pos.y),
                 this.transform
             )
+            player.pos.x = this.transform[6]
+            player.pos.y = this.transform[7]
+
         }
+        this.hook.update(delta)
     }
 
     release(delta) {
         this.hung = !this.hung
+        this.hook.state = "returning"
         this.vel.x = -Math.sin(this.angle) * this.ang_vel * delta * 7
         this.vel.y = -Math.cos(this.angle) * this.ang_vel * delta * 7
-        this.hook.pos = this.pos
     }
 }
 
@@ -68,9 +72,40 @@ class Hook extends GameObject {
             earcut(shape),
             matrix.translation(x, y)
         )
+        this.state = "hanging"
+        this.counter = 0
+        this.attraction = 1
         game_object.push(this)
     }
 
     update(delta) {
+        if (this.state == "hanging") {
+
+        }
+        else if (this.state == "returning") {
+            this.transform = matrix.translation(player.pos.x, player.pos.y)
+        }
+        else if (this.state == "shooting") {
+
+
+
+            // if (this.counter < 2) {
+            //     let b
+            //     if (this.counter < 1) {
+            //         b = bezier([0, 0], [1, 0], [0, 1], [1, 1], this.counter)
+            //     }
+            //     else {
+            //         b = bezier([0, 1], [1, 1], [0, 0], [1, 0], this.counter - 1)
+            //     }
+            //     this.transform = matrix.translation(player.pos.x, player.pos.y - 300 * b.y)
+            //     this.counter += 0.005
+            // }
+            // else {
+            //     this.state = "idle"
+            // }
+        }
+        else if (this.state == "idle") {
+            this.transform = matrix.translation(player.pos.x, player.pos.y)
+        }
     }
 }

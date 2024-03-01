@@ -30,3 +30,16 @@ function dist(x1, y1, x2, y2) {
     const dy = y2 - y1
     return Math.sqrt(dx * dx + dy * dy)
 }
+
+function bezier(p0, p1, p2, p3, t) {
+    let p = []
+    p[0] = Math.pow(1 - t, 3) * p0[0] +
+        Math.pow(1 - t, 2) * 3 * t * p1[0] +
+        (1 - t) * 3 * t * t * p2[0] +
+        t * t * t * p3[0];
+    p[1] = Math.pow(1 - t, 3) * p0[1] +
+        Math.pow(1 - t, 2) * 3 * t * p1[1] +
+        (1 - t) * 3 * t * t * p2[1] +
+        t * t * t * p3[1];
+    return { x: p[0], y: p[1] };
+}

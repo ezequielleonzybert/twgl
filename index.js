@@ -59,6 +59,7 @@ function render(now) {
                 const uniforms = {
                     u_resolution: [gl.canvas.width, gl.canvas.height],
                     u_transform: game_object[i].transform,
+                    u_color: [1, 0, 0, 1],
                 }
 
                 gl.useProgram(program_info.program)
