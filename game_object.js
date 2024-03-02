@@ -5,6 +5,7 @@ class GameObject {
         this.indices = indices
         this.transform = transform
         this.color = color
+        game_object.push(this)
     }
     get_arrays() {
         let arrays = {

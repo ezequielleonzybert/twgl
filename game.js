@@ -2,9 +2,11 @@
 
 let player
 let platform = []
+let joystick
 
 class Game {
     setup() {
+        joystick = new Joystick()
         player = new Player(canvas.width / 2, canvas.height / 2)
         while (platform.length < 7) {
             platform.push(new Platform())
@@ -35,5 +37,6 @@ class Game {
             }
         }
         player.update(delta)
+        joystick.update()
     }
 }

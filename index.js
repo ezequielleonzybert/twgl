@@ -27,6 +27,8 @@ function setup_dom() {
 let game = new Game()
 
 function app() {
+    gl.enable(gl.BLEND);
+
     program_info = twgl.createProgramInfo(gl, [vs, fs])
 
     game_object.forEach((e) => {
@@ -54,6 +56,7 @@ function render(now) {
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
             gl.clearColor(0.1, 0.1, 0.1, 1)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 
             for (let i = 0; i < buffer_info.length; i++) {
                 const uniforms = {

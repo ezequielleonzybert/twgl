@@ -16,7 +16,6 @@ class Platform extends GameObject {
         this.height = height
         this.speed = { "x": (Math.random() + 1) * 0.01, "y": 0 }
         this.stop = true
-        game_object.push(this)
     }
     setup() {
         this.pos.x = canvas.width + this.width / 2

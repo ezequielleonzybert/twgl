@@ -17,3 +17,4 @@ let landscape
 const frame_interval = 1000 / 60
 let gravity = 1
 let delta
+let mousedown = false

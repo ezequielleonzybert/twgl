@@ -60,6 +60,22 @@ container.addEventListener("fullscreenchange", () => {
 //     if (state == 1)
 //         document.exitFullscreen()
 // })
+canvas.addEventListener("mousemove", (e) => {
+    if (mousedown) {
+        joystick.stick.pos = { x: e.clientX, y: e.clientY }
+    }
+})
+
+canvas.addEventListener("mousedown", (e) => {
+    mousedown = true
+    joystick.pos = { x: e.clientX, y: e.clientY }
+    joystick.stick.pos = { x: e.clientX, y: e.clientY }
+
+})
+
+canvas.addEventListener("mouseup", (e) => {
+    mousedown = false
+})
 
 document.addEventListener("keydown", (e) => {
     if (state == 1) {

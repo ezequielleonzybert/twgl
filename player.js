@@ -18,7 +18,6 @@ class Player extends GameObject {
         this.hung = true
         this.acc = { x: 0, y: 0 }
         this.vel = { x: 0, y: 0 }
-        game_object.push(this)
     }
 
     update(delta) {
@@ -78,7 +77,6 @@ class Hook extends GameObject {
         this.counter = 0
         this.target
         this.origin
-        game_object.push(this)
     }
 
     update(delta) {
