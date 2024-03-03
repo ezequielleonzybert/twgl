@@ -72,7 +72,7 @@ canvas.addEventListener("mousedown", (e) => {
     joystick.set_pos(e.clientX, e.clientY)
 })
 
-canvas.addEventListener("mouseup", (e) => {
+canvas.addEventListener("mouseup", () => {
     mousedown = false
 })
 
@@ -122,6 +122,15 @@ canvas.addEventListener("touchmove", (e) => {
                 x: touchlist.item(i).clientX,
                 y: touchlist.item(i).clientY
             }
+        }
+    }
+})
+
+canvas.addEventListener("touchend", (e) => {
+    const touchlist = e.changedTouches
+    for (let i = 0; i < touchlist.length; i++) {
+        if (touchlist.item(i).clientX < canvas.width / 2) {
+            mousedown = false
         }
     }
 })
