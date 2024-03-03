@@ -98,3 +98,12 @@ canvas.addEventListener("touchstart", (e) => {
         }
     }
 })
+
+// canvas.addEventListener("touchmove", (e) => {
+//     const touchlist = e.changedTouches
+//     for (let i = 0; i < touchlist.length; i++) {
+//         if (touchlist.item(i).clientX > canvas.width / 2) {
+
+//         }
+//     }
+// })

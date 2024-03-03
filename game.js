@@ -36,7 +36,8 @@ class Game {
                 platform[i].setup()
             }
         }
-        player.update(delta)
+
         joystick.update()
+        player.update(delta)
     }
 }

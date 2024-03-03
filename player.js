@@ -22,7 +22,7 @@ class Player extends GameObject {
 
     update(delta) {
         if (this.hung) {
-            this.ang_acc = -Math.cos(this.angle) * 0.00005 / this.len
+            this.ang_acc = -Math.cos(this.angle) * gravity / this.len
             this.ang_vel += (this.ang_acc * delta)
             this.angle += (this.ang_vel * delta)
             // rotation pivot position
@@ -38,7 +38,7 @@ class Player extends GameObject {
             this.pos.y = this.transform[7]
         }
         else {
-            this.acc.y = 0.000025
+            this.acc.y = gravity
             this.vel.x += this.acc.x * delta
             this.vel.y += this.acc.y * delta
             this.pos.x = this.vel.x * delta
@@ -82,8 +82,8 @@ class Hook extends GameObject {
     update(delta) {
         this.pos.x = this.transform[6]
         this.pos.y = this.transform[7]
+        this.target = { x: Math.cos(joystick.angle) * 200, y: -Math.sin(joystick.angle) * 200 }
         if (this.state == "hanging") {
-
         }
         else if (this.state == "returning") {
             this.transform = matrix.translation(player.pos.x, player.pos.y)
@@ -116,6 +116,5 @@ class Hook extends GameObject {
         this.state = "shooting"
         this.counter = 0
         this.origin = { ...this.pos }
-        this.target = { x: 100, y: 100 }
     }
 }

@@ -14,13 +14,14 @@ class Platform extends GameObject {
         )
         this.width = width
         this.height = height
-        this.speed = { "x": (Math.random() + 1) * 0.01, "y": 0 }
+        this.speed_factor = 0.005
+        this.speed = { x: (Math.random() + 1) * this.speed_factor, y: 0 }
         this.stop = true
     }
     setup() {
         this.pos.x = canvas.width + this.width / 2
         this.pos.y = Math.random() * canvas.height * 0.4 + this.height
-        this.speed = { "x": (Math.random() + 1) * 0.01, "y": 0 }
+        this.speed.x = (Math.random() + 1) * this.speed_factor
     }
     update(delta) {
         this.pos.x -= this.speed.x * delta

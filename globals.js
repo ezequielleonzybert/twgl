@@ -15,6 +15,6 @@ let counter = 0
 let game_object = []
 let landscape
 const frame_interval = 1000 / 60
-let gravity = 1
+let gravity = 0.00002
 let delta
 let mousedown = false
