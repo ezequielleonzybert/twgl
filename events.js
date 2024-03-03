@@ -56,21 +56,20 @@ container.addEventListener("fullscreenchange", () => {
     }
 })
 
-// window.addEventListener("blur", (e) => {
-//     if (state == 1)
-//         document.exitFullscreen()
-// })
+window.addEventListener("blur", (e) => {
+    if (state == 1)
+        document.exitFullscreen()
+})
+
 canvas.addEventListener("mousemove", (e) => {
     if (mousedown) {
-        joystick.stick.pos = { x: e.clientX, y: e.clientY }
+        joystick.stick.set_pos(e.clientX, e.clientY)
     }
 })
 
 canvas.addEventListener("mousedown", (e) => {
     mousedown = true
-    joystick.pos = { x: e.clientX, y: e.clientY }
-    joystick.stick.pos = { x: e.clientX, y: e.clientY }
-
+    joystick.set_pos(e.clientX, e.clientY)
 })
 
 canvas.addEventListener("mouseup", (e) => {
@@ -94,16 +93,35 @@ canvas.addEventListener("touchstart", (e) => {
     const touchlist = e.changedTouches
     for (let i = 0; i < touchlist.length; i++) {
         if (touchlist.item(i).clientX > canvas.width / 2) {
-            player.release(delta)
+            if (player.hung) {
+                player.release(delta)
+            }
+            else {
+                player.hook.shoot()
+            }
+        }
+        else {
+            mousedown = true
+            joystick.pos = {
+                x: touchlist.item(i).clientX,
+                y: touchlist.item(i).clientY
+            }
+            joystick.stick.pos = {
+                x: touchlist.item(i).clientX,
+                y: touchlist.item(i).clientY
+            }
         }
     }
 })
 
-// canvas.addEventListener("touchmove", (e) => {
-//     const touchlist = e.changedTouches
-//     for (let i = 0; i < touchlist.length; i++) {
-//         if (touchlist.item(i).clientX > canvas.width / 2) {
-
-//         }
-//     }
-// })
+canvas.addEventListener("touchmove", (e) => {
+    const touchlist = e.changedTouches
+    for (let i = 0; i < touchlist.length; i++) {
+        if (touchlist.item(i).clientX < canvas.width / 2) {
+            joystick.stick.pos = {
+                x: touchlist.item(i).clientX,
+                y: touchlist.item(i).clientY
+            }
+        }
+    }
+})

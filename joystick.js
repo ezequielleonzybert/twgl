@@ -2,13 +2,13 @@ class Joystick extends GameObject {
     constructor() {
         const pos = {}
         const radius = canvas.width / 15
-        const shape = circle(0, 0, radius, 40)
-        const indices = earcut(shape)
+        const vertices = circle(0, 0, radius, 40)
+        const indices = earcut(vertices)
         const transform = matrix.identity()
         const color = [1, 1, 1, 0.05]
         super(
             pos,
-            shape,
+            vertices,
             indices,
             transform,
             color
@@ -25,32 +25,37 @@ class Joystick extends GameObject {
                 this.pos.x += Math.cos(this.angle) * (distance - this.radius)
                 this.pos.y -= Math.sin(this.angle) * (distance - this.radius)
             }
-
-            this.transform = matrix.translation(this.pos.x, this.pos.y)
-            this.stick.update()
         }
         else {
             this.hide()
         }
+        this.transform = matrix.translation(this.pos.x, this.pos.y)
+        this.stick.update()
     }
-    show(pos) {
-        this.transform = matrix.translation(pos.x, pos.y)
+    set_pos(x, y) {
+        this.pos.x = x
+        this.pos.y = y
+        this.stick.pos.x = x
+        this.stick.pos.y = y
     }
     hide() {
-
+        this.pos.x = -9999
+        this.pos.y = -9999
+        this.stick.pos.x = -9999
+        this.stick.pos.y = -9999
     }
 }
 
 class Stick extends GameObject {
     constructor(radius) {
         const pos = { x: 0, y: 0 }
-        const shape = circle(0, 0, radius, 30)
-        const indices = earcut(shape)
+        const vertices = circle(0, 0, radius, 30)
+        const indices = earcut(vertices)
         const transform = matrix.identity()
         const color = [1, 1, 1, 0.05]
         super(
             pos,
-            shape,
+            vertices,
             indices,
             transform,
             color
@@ -59,5 +64,9 @@ class Stick extends GameObject {
     }
     update() {
         this.transform = matrix.translation(this.pos.x, this.pos.y)
+    }
+    set_pos(x, y) {
+        this.pos.x = x
+        this.pos.y = y
     }
 }

@@ -17,10 +17,12 @@ function setup_dom() {
     canvas.style.position = "absolute"
     container.appendChild(canvas)
 
+    overlay.style.userSelect = "none"
     overlay.style.display = "block"
     overlay.style.position = "absolute"
     overlay.style.padding = "10px"
     overlay.style.fontFamily = "monospace"
+    overlay.style.color = "white"
     container.appendChild(overlay)
 }
 
@@ -43,13 +45,14 @@ function app() {
 function render(now) {
     if (state == 1) {
 
-        // counter++
-        // if (counter == 1 || counter % 20 == 0) {
-        //     overlay.innerHTML = //overlay_content
-        //         "fps: " + Math.round(1000 / (now - then)) + "<br>" +
-        //         "gl.canvas.width: " + gl.canvas.width + "<br>" +
-        //         "gl.vancas.height: " + gl.canvas.height
-        // }
+        counter++
+        if (counter == 1 || counter % 20 == 0) {
+            overlay.innerHTML = //overlay_content
+                // "fps: " + Math.round(1000 / (now - then)) + "<br>" +
+                // "gl.canvas.width: " + gl.canvas.width + "<br>" +
+                // "gl.vancas.height: " + gl.canvas.height
+                mousedown
+        }
 
         if (then !== undefined && then !== now) {
             // webglUtils.resizeCanvasToDisplaySize(gl.canvas);

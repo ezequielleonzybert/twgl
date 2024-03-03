@@ -1,11 +1,11 @@
 class Player extends GameObject {
     constructor(x, y) {
         const radius = canvas.height * 0.025
-        const shape = circle(0, 0, radius, 30)
+        const vertices = circle(0, 0, radius, 30)
         super(
             { x: x, y: y },
-            shape,
-            earcut(shape),
+            vertices,
+            earcut(vertices),
             matrix.translation(x, y),
             [0.9, 0.1, 0.1, 1]
         )
@@ -65,11 +65,11 @@ class Player extends GameObject {
 
 class Hook extends GameObject {
     constructor(x, y, r) {
-        const shape = circle(0, 0, r, 10)
+        const vertices = circle(0, 0, r, 10)
         super(
             { x: x, y: y },
-            shape,
-            earcut(shape),
+            vertices,
+            earcut(vertices),
             matrix.translation(x, y),
             [1, 0.5, 0.5, 1]
         )
@@ -77,12 +77,17 @@ class Hook extends GameObject {
         this.counter = 0
         this.target
         this.origin
+        this.speed = 0.003
+        this.power = canvas.height / 3
     }
 
     update(delta) {
         this.pos.x = this.transform[6]
         this.pos.y = this.transform[7]
-        this.target = { x: Math.cos(joystick.angle) * 200, y: -Math.sin(joystick.angle) * 200 }
+        this.target = {
+            x: Math.cos(joystick.angle) * this.power,
+            y: -Math.sin(joystick.angle) * this.power
+        }
         if (this.state == "hanging") {
         }
         else if (this.state == "returning") {
@@ -102,7 +107,13 @@ class Hook extends GameObject {
                         player.pos.x + (this.origin.x - player.pos.x + this.target.x) * b.y,
                         player.pos.y + (this.origin.y - player.pos.y + this.target.y) * b.y)
                 }
-                this.counter += 0.005
+                this.pos.x = this.transform[6]
+                this.pos.y = this.transform[7]
+                this.counter += this.speed
+                if (this.colliding()) {
+                    this.state = "hanging"
+                    player.hung = true
+                }
             }
             else {
                 this.state = "idle"
@@ -116,5 +127,20 @@ class Hook extends GameObject {
         this.state = "shooting"
         this.counter = 0
         this.origin = { ...this.pos }
+    }
+    colliding() {
+        let platform_vertices
+
+        for (let i = 0; i < platform.length; i++) {
+            platform_vertices = []
+            for (let j = 0; j < platform[i].vertices.length; j += 2) {
+                platform_vertices.push(platform[i].vertices[j] + platform[i].transform[6])
+                platform_vertices.push(platform[i].vertices[j + 1] + platform[i].transform[7])
+            }
+            if (point_in_polygon(this.pos.x, this.pos.y, platform_vertices)) {
+                return true
+            }
+        }
+        return false
     }
 }
