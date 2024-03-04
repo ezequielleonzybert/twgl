@@ -59,8 +59,8 @@ class Player extends GameObject {
     release(delta) {
         this.hung = !this.hung
         this.hook.state = "returning"
-        this.vel.x = -Math.sin(this.angle) * this.ang_vel * delta * 3
-        this.vel.y = -Math.cos(this.angle) * this.ang_vel * delta * 3
+        this.vel.x = -Math.sin(this.angle) * this.ang_vel * delta * 7
+        this.vel.y = -Math.cos(this.angle) * this.ang_vel * delta * 7
     }
 }
 
