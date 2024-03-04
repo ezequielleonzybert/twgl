@@ -2,7 +2,7 @@ class Platform extends GameObject {
     constructor() {
         const width = canvas.width * 0.125
         const height = canvas.height * 0.02
-        const x = canvas.width + width * 0.5
+        const x = Math.random() * canvas.width //canvas.width + width * 0.5
         const y = Math.random() * canvas.height * 0.4 + height
         const vertices = rectangle(0, 0, width, height)
         super(
@@ -16,7 +16,7 @@ class Platform extends GameObject {
         this.height = height
         this.speed_factor = 0.005
         this.speed = { x: (Math.random() + 1) * this.speed_factor, y: 0 }
-        this.stop = true
+        this.stop = false
     }
     setup() {
         this.pos.x = canvas.width + this.width / 2

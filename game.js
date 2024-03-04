@@ -11,7 +11,7 @@ class Game {
         while (platform.length < 7) {
             platform.push(new Platform())
         }
-        window.setTimeout(() => { platform[0].stop = false }, 1000)
+        // window.setTimeout(() => { platform[0].stop = false }, 1000)
     }
     update(delta) {
         for (let i = 0; i < platform.length; i++) {

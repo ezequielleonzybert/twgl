@@ -9,8 +9,9 @@ class Player extends GameObject {
             matrix.translation(x, y),
             [0.9, 0.1, 0.1, 1]
         )
+        this.pos = { x: x, y: y }
         this.radius = radius
-        this.hook = new Hook(x, y - 100, this.radius / 4)
+        this.hook = new Hook(x, y, this.radius / 4)
         this.angle = 0
         this.ang_acc = 0
         this.ang_vel = 0
@@ -22,7 +23,7 @@ class Player extends GameObject {
 
     update(delta) {
         if (this.hung) {
-            this.ang_acc = -Math.cos(this.angle) * gravity / this.len
+            this.ang_acc = -Math.cos(this.angle) * gravity / this.hook.len
             this.ang_vel += (this.ang_acc * delta)
             this.angle += (this.ang_vel * delta)
             // rotation pivot position
@@ -32,7 +33,7 @@ class Player extends GameObject {
             // bob position
             this.transform = matrix.multiply(
                 this.transform,
-                matrix.translation(this.len, 0))
+                matrix.translation(this.hook.len, 0))
             // update positions
             this.pos.x = this.transform[6]
             this.pos.y = this.transform[7]
@@ -58,27 +59,30 @@ class Player extends GameObject {
     release(delta) {
         this.hung = !this.hung
         this.hook.state = "returning"
-        this.vel.x = -Math.sin(this.angle) * this.ang_vel * delta * 7
-        this.vel.y = -Math.cos(this.angle) * this.ang_vel * delta * 7
+        this.vel.x = -Math.sin(this.angle) * this.ang_vel * delta * 3
+        this.vel.y = -Math.cos(this.angle) * this.ang_vel * delta * 3
     }
 }
 
 class Hook extends GameObject {
     constructor(x, y, r) {
-        const vertices = circle(0, 0, r, 10)
+        const vertices = circle(0, 0, r, 15)
         super(
-            { x: x, y: y },
+            { x: x, y: y - 100 },
             vertices,
             earcut(vertices),
             matrix.translation(x, y),
             [1, 0.5, 0.5, 1]
         )
-        this.state = "hanging"
+        this.pos = { x: x, y: y - 100 }
+        this.state = "floating"
         this.counter = 0
         this.target
-        this.origin
+        this.origin = { x: x, y: y }
         this.speed = 0.003
         this.power = canvas.height / 3
+        this.platform_i = undefined
+        this.len = dist(x, y - 100, this.origin.x, this.origin.y)
     }
 
     update(delta) {
@@ -88,7 +92,11 @@ class Hook extends GameObject {
             x: Math.cos(joystick.angle) * this.power,
             y: -Math.sin(joystick.angle) * this.power
         }
+        if (this.state == "floating") {
+        }
         if (this.state == "hanging") {
+            this.pos.x -= platform[this.platform_i].speed.x * delta
+            this.transform = matrix.translation(this.pos.x, this.pos.y)
         }
         else if (this.state == "returning") {
             this.transform = matrix.translation(player.pos.x, player.pos.y)
@@ -112,6 +120,8 @@ class Hook extends GameObject {
                 this.counter += this.speed
                 if (this.colliding()) {
                     this.state = "hanging"
+                    player.angle = -Math.atan2(player.pos.y - this.pos.y, player.pos.x - this.pos.x)
+                    this.len = dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y)
                     player.hung = true
                 }
             }
@@ -138,6 +148,7 @@ class Hook extends GameObject {
                 platform_vertices.push(platform[i].vertices[j + 1] + platform[i].transform[7])
             }
             if (point_in_polygon(this.pos.x, this.pos.y, platform_vertices)) {
+                this.platform_i = i
                 return true
             }
         }
