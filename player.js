@@ -19,41 +19,55 @@ class Player extends GameObject {
         this.hung = true
         this.acc = { x: 0, y: 0 }
         this.vel = { x: 0, y: 0 }
+        this.lives = 1
+        this.state = "alive"
     }
 
     update(delta) {
-        if (this.hung) {
-            this.ang_acc = -Math.cos(this.angle) * gravity / this.hook.len
-            this.ang_vel += (this.ang_acc * delta)
-            this.angle += (this.ang_vel * delta)
-            // rotation pivot position
-            this.transform = matrix.multiply(
-                matrix.translation(this.hook.pos.x, this.hook.pos.y),
-                matrix.rotation(this.angle))
-            // bob position
-            this.transform = matrix.multiply(
-                this.transform,
-                matrix.translation(this.hook.len, 0))
-            // update positions
-            this.pos.x = this.transform[6]
-            this.pos.y = this.transform[7]
-        }
-        else {
-            this.acc.y = gravity
-            this.vel.x += this.acc.x * delta
-            this.vel.y += this.acc.y * delta
-            this.pos.x = this.vel.x * delta
-            this.pos.y = this.vel.y * delta
+        if (this.state == "alive") {
+            if (this.hung) {
+                this.ang_acc = -Math.cos(this.angle) * gravity / this.hook.len
+                this.ang_vel += (this.ang_acc * delta)
+                this.angle += (this.ang_vel * delta)
+                // rotation pivot position
+                this.transform = matrix.multiply(
+                    matrix.translation(this.hook.pos.x, this.hook.pos.y),
+                    matrix.rotation(this.angle))
+                // bob position
+                this.transform = matrix.multiply(
+                    this.transform,
+                    matrix.translation(this.hook.len, 0))
+                // update positions
+                this.pos.x = this.transform[6]
+                this.pos.y = this.transform[7]
+            }
+            else {
+                this.acc.y = gravity
+                this.vel.x += this.acc.x * delta
+                this.vel.y += this.acc.y * delta
+                this.pos.x = this.vel.x * delta
+                this.pos.y = this.vel.y * delta
 
-            this.transform = matrix.multiply(
-                matrix.translation(this.pos.x, this.pos.y),
-                this.transform
-            )
-            player.pos.x = this.transform[6]
-            player.pos.y = this.transform[7]
+                this.transform = matrix.multiply(
+                    matrix.translation(this.pos.x, this.pos.y),
+                    this.transform
+                )
+                this.pos.x = this.transform[6]
+                this.pos.y = this.transform[7]
+
+            }
+            this.hook.update(delta)
+
+            if (this.pos.y - this.radius > canvas.height) {
+                this.lives -= 1
+                if (this.lives == 0) {
+                    this.state = "dead"
+                }
+            }
+        }
+        else if (this.state == "dead") {
 
         }
-        this.hook.update(delta)
     }
 
     release(delta) {
@@ -62,6 +76,7 @@ class Player extends GameObject {
         this.vel.x = -Math.sin(this.angle) * this.ang_vel * delta * 7
         this.vel.y = -Math.cos(this.angle) * this.ang_vel * delta * 7
     }
+
 }
 
 class Hook extends GameObject {
@@ -80,17 +95,18 @@ class Hook extends GameObject {
         this.target
         this.origin = { x: x, y: y }
         this.speed = 0.003
-        this.power = canvas.height / 3
+        this.power = canvas.height / 2
         this.platform_i = undefined
         this.len = dist(x, y - 100, this.origin.x, this.origin.y)
+        this.angle = 0
     }
 
     update(delta) {
         this.pos.x = this.transform[6]
         this.pos.y = this.transform[7]
         this.target = {
-            x: Math.cos(joystick.angle) * this.power,
-            y: -Math.sin(joystick.angle) * this.power
+            x: Math.cos(this.angle) * this.power,
+            y: -Math.sin(this.angle) * this.power
         }
         if (this.state == "floating") {
         }
@@ -133,7 +149,8 @@ class Hook extends GameObject {
             this.transform = matrix.translation(player.pos.x, player.pos.y)
         }
     }
-    shoot() {
+    shoot(ang) {
+        this.angle = ang
         this.state = "shooting"
         this.counter = 0
         this.origin = { ...this.pos }

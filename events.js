@@ -15,7 +15,6 @@ function fullscreen(e) {
 button.addEventListener("click", () => {
     if (window.screen.width > window.screen.height) {
         fullscreen(container)
-
     }
     else {
         alert("Please change the device orientation to landscape in order to play")
@@ -61,15 +60,15 @@ window.addEventListener("blur", (e) => {
         document.exitFullscreen()
 })
 
-canvas.addEventListener("mousemove", (e) => {
-    if (mousedown) {
-        joystick.stick.set_pos(e.clientX, e.clientY)
-    }
-})
+// canvas.addEventListener("mousemove", (e) => {
+//     if (mousedown) {
+//         joystick.stick.set_pos(e.clientX, e.clientY)
+//     }
+// })
 
 canvas.addEventListener("mousedown", (e) => {
     mousedown = true
-    joystick.set_pos(e.clientX, e.clientY)
+    // joystick.set_pos(e.clientX, e.clientY)
 })
 
 canvas.addEventListener("mouseup", () => {
@@ -78,12 +77,23 @@ canvas.addEventListener("mouseup", () => {
 
 document.addEventListener("keydown", (e) => {
     if (state == 1) {
-        if (e.key == ' ') {
+        if (e.key == "ArrowRight") {
             if (player.hung) {
                 player.release(delta)
             }
             else {
-                player.hook.shoot()
+                const angle = Math.PI / 4
+                player.hook.shoot(angle)
+            }
+        }
+        // RIGHT
+        if (e.key == "ArrowLeft") {
+            if (player.hung) {
+                player.release(delta)
+            }
+            else {
+                const angle = Math.PI * 3 / 4
+                player.hook.shoot(angle)
             }
         }
     }
@@ -97,30 +107,17 @@ canvas.addEventListener("touchstart", (e) => {
                 player.release(delta)
             }
             else {
-                player.hook.shoot()
+                const angle = Math.PI * 0.25
+                player.hook.shoot(angle)
             }
         }
         else {
-            mousedown = true
-            joystick.pos = {
-                x: touchlist.item(i).clientX,
-                y: touchlist.item(i).clientY
+            if (player.hung) {
+                player.release(delta)
             }
-            joystick.stick.pos = {
-                x: touchlist.item(i).clientX,
-                y: touchlist.item(i).clientY
-            }
-        }
-    }
-})
-
-canvas.addEventListener("touchmove", (e) => {
-    const touchlist = e.changedTouches
-    for (let i = 0; i < touchlist.length; i++) {
-        if (touchlist.item(i).clientX < canvas.width / 2) {
-            joystick.stick.pos = {
-                x: touchlist.item(i).clientX,
-                y: touchlist.item(i).clientY
+            else {
+                const angle = Math.PI * 0.75
+                player.hook.shoot(angle)
             }
         }
     }
@@ -134,3 +131,15 @@ canvas.addEventListener("touchend", (e) => {
         }
     }
 })
+
+// canvas.addEventListener("touchmove", (e) => {
+//     const touchlist = e.changedTouches
+//     for (let i = 0; i < touchlist.length; i++) {
+//         if (touchlist.item(i).clientX < canvas.width / 2) {
+//             joystick.stick.pos = {
+//                 x: touchlist.item(i).clientX,
+//                 y: touchlist.item(i).clientY
+//             }
+//         }
+//     }
+// })
